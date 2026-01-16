@@ -1,12 +1,18 @@
 # Enterprise HRM Platform
 
-**Version:** 1.0.0  
-**Status:** In Development  
+**Version:** 1.1.0  
+**Status:** In Development (MVP Feature Complete)  
 **Architecture:** Modular Monolith → Microservices Ready
 
 ## 🎯 Project Overview
 
-Enterprise-level Human Resource Management (HRM) SaaS platform designed to serve medium to large organizations globally. Built with modern technologies and best practices.
+Enterprise-level Human Resource Management (HRM) SaaS platform designed to serve medium to large organizations globally. Built with modern technologies and best practices, featuring a responsive web dashboard and a fully functional mobile application.
+
+## 🌟 Key Recent Updates
+- **Full Localization (Arabic & English):** Complete RTL (Right-to-Left) support for both Web and Mobile.
+- **Mobile Payslips:** Employees can now view and download their monthly payslips as official PDFs from the mobile app.
+- **Attendance GPS:** Real-time location tracking for employee clock-in/out on mobile.
+- **Reporting Analytics:** Interactive localized charts for payroll and department distribution.
 
 ## 🏗️ Project Structure
 
@@ -15,120 +21,88 @@ hrm-platform/
 ├── backend/              # Laravel API (PHP 8.3+)
 ├── frontend/             # React Dashboard (TypeScript)
 ├── mobile/               # Flutter App (iOS & Android)
-├── infrastructure/       # Docker, K8s, Terraform
-├── docs/                 # Documentation
+├── infrastructure/       # Docker, Nginx Configuration
+├── docs/                 # Documentation & Architecture
 └── README.md
 ```
 
 ## 🚀 Tech Stack
 
 ### Backend
-- **Framework:** Laravel 11+
-- **Language:** PHP 8.3+
-- **Database:** PostgreSQL 15+
-- **Cache:** Redis 7+
-- **Queue:** Laravel Queue (Redis)
-- **Search:** Meilisearch
+- **Framework:** Laravel 12.0
+- **PDF Generation:** Laravel DomPDF (with Arabic/RTL support)
+- **Database:** PostgreSQL
+- **Security:** Laravel Sanctum (JWT), RBAC (Roles/Permissions)
+- **Documentation:** L5-Swagger
 
 ### Frontend
-- **Framework:** React 18+
+- **Framework:** React 18+ (Vite)
 - **Language:** TypeScript
-- **Build:** Vite
-- **UI Library:** Material-UI
-- **State:** Redux Toolkit
+- **UI Library:** Material-UI (MUI)
+- **Charts:** Recharts (Localized)
+- **i18n:** i18next (Arabic/English/RTL)
 
 ### Mobile
-- **Framework:** Flutter 3+
-- **Language:** Dart
-- **State:** Bloc/Provider
-
-### Infrastructure
-- **Containers:** Docker + Docker Compose
-- **Orchestration:** Kubernetes (Production)
-- **CI/CD:** GitHub Actions
-- **Cloud:** AWS / Azure / DigitalOcean
+- **Framework:** Flutter 3.x
+- **Localization:** flutter_localizations + intl
+- **Network:** Dio
+- **File Handling:** path_provider + open_filex
 
 ## 📋 Prerequisites
 
-- PHP 8.3+
-- Composer 2.6+
-- Node.js 20+
-- Flutter 3+
+- PHP 8.2+
+- Composer 2.x
+- Node.js 18+
+- Flutter SDK (stable)
 - Docker & Docker Compose
-- PostgreSQL 15+
-- Redis 7+
 
 ## 🛠️ Quick Start
 
-### 1. Clone Repository
-
+### 1. Clone & Setup
 ```bash
-git clone <repository-url>
+git clone https://github.com/ahmedabdelhaleemnoby/hrm-platform.git
 cd hrm-platform
 ```
 
-### 2. Backend Setup
+### 2. Manual Setup (Development)
 
+**Backend:**
 ```bash
 cd backend
 cp .env.example .env
 composer install
 php artisan key:generate
-php artisan migrate
-php artisan db:seed
+php artisan migrate --seed
 php artisan serve
 ```
 
-### 3. Frontend Setup
-
+**Frontend:**
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-### 4. Mobile Setup
-
+**Mobile:**
 ```bash
 cd mobile
 flutter pub get
 flutter run
 ```
 
-### 5. Docker Setup (Recommended)
-
+### 3. Docker Setup
 ```bash
 docker-compose up -d
 ```
 
-## 📚 Documentation
-
-- [Architecture Documentation](docs/architecture.md)
-- [Database Schema](docs/database_schema.md)
-- [API Documentation](docs/api_design.md)
-- [Security & Compliance](docs/security_compliance.md)
-- [Business Rules](docs/business_rules.md)
-- [Implementation Plan](docs/implementation_plan.md)
-
-## 🔐 Security
-
-- Multi-factor authentication (MFA)
-- Role-based access control (RBAC)
-- Attribute-based access control (ABAC)
-- End-to-end encryption
-- GDPR & SOC2 compliant
-- Regular security audits
-
 ## 📊 Modules
 
-- ✅ **Employee Management** - Complete employee lifecycle
-- ✅ **Attendance & Time Tracking** - Clock in/out, shifts, overtime
-- ✅ **Payroll** - Salary calculation, tax, payments
-- ✅ **Leave Management** - Leave requests, approval workflow
-- ✅ **Performance Management** - OKRs, reviews, 360 feedback
-- ✅ **Recruitment** - ATS, job postings, interviews
-- ✅ **Training & Development** - Courses, certifications
-- ✅ **Reporting & Analytics** - Custom reports, dashboards
+- ✅ **Employee Management** - Full lifecycle with document management.
+- ✅ **Attendance & Time Tracking** - GPS-based mobile clock-in/out + Web dashboard.
+- ✅ **Payroll** - Period-based calculation, payslip list, and official PDF generation.
+- ✅ **Leave Management** - Multi-level approval workflows and history tracking.
+- ✅ **Reporting & Analytics** - Departmental stats, payroll expenses, and data exports.
+- ✅ **Localization** - Seamless switching between English (LTR) and Arabic (RTL).
 
 ## 🧪 Testing
 
@@ -139,61 +113,21 @@ php artisan test
 
 # Frontend
 cd frontend
-npm run test
+npm run lint
 
 # Mobile
 cd mobile
-flutter test
-```
-
-## 📦 Deployment
-
-### Development
-```bash
-docker-compose -f docker-compose.dev.yml up
-```
-
-### Staging
-```bash
-docker-compose -f docker-compose.staging.yml up
-```
-
-### Production
-```bash
-# See infrastructure/kubernetes/ for K8s manifests
-kubectl apply -f infrastructure/kubernetes/
+flutter analyze
 ```
 
 ## 🤝 Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+We welcome contributions! Please check [CONTRIBUTING.md](CONTRIBUTING.md) for our standards and submission process.
 
 ## 📝 License
 
-This project is proprietary software. All rights reserved.
-
-## 👥 Team
-
-- **Product Manager:** TBD
-- **Tech Lead:** TBD
-- **Backend Team:** TBD
-- **Frontend Team:** TBD
-- **Mobile Team:** TBD
-- **DevOps:** TBD
-
-## 📞 Support
-
-- **Email:** support@hrm-platform.com
-- **Docs:** https://docs.hrm-platform.com
-- **Status:** https://status.hrm-platform.com
-
-## 🗺️ Roadmap
-
-- **Phase 1 (Months 1-4):** MVP - Core modules
-- **Phase 2 (Months 5-8):** Payroll & Performance
-- **Phase 3 (Months 9-12):** Recruitment & Training
-- **Phase 4 (Months 13-18):** Enterprise features
+This project is proprietary. All rights reserved.
 
 ---
 
-**Built with ❤️ for the future of HR technology**
+**Built with ❤️ for a digitized HR experience**
