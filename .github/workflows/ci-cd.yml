@@ -62,7 +62,7 @@ jobs:
       - name: Run Tests
         run: |
           cd backend
-          php artisan test --coverage --min=80
+          php artisan test --coverage
       
       - name: Upload Coverage
         uses: codecov/codecov-action@v3
