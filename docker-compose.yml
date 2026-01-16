@@ -1,0 +1,168 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: hrm_postgres
+    environment:
+      POSTGRES_DB: hrm_platform
+      POSTGRES_USER: hrm_user
+      POSTGRES_PASSWORD: hrm_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infrastructure/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - hrm_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hrm_user -d hrm_platform"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache & Queue
+  redis:
+    image: redis:7-alpine
+    container_name: hrm_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - hrm_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Laravel Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: hrm_backend
+    ports:
+      - "8000:8000"
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: hrm_platform
+      DB_USERNAME: hrm_user
+      DB_PASSWORD: hrm_password
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - ./backend:/var/www/html
+      - backend_vendor:/var/www/html/vendor
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - hrm_network
+    command: php artisan serve --host=0.0.0.0 --port=8000
+
+  # Laravel Queue Worker
+  queue:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: hrm_queue
+    environment:
+      APP_ENV: local
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: hrm_platform
+      DB_USERNAME: hrm_user
+      DB_PASSWORD: hrm_password
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - ./backend:/var/www/html
+      - backend_vendor:/var/www/html/vendor
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - hrm_network
+    command: php artisan queue:work --sleep=3 --tries=3
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: hrm_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_URL: http://localhost:8000/api
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - hrm_network
+    command: npm run dev
+
+  # Nginx Reverse Proxy (Optional)
+  nginx:
+    image: nginx:alpine
+    container_name: hrm_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./infrastructure/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./infrastructure/nginx/sites:/etc/nginx/conf.d
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - hrm_network
+
+  # Meilisearch (Search Engine)
+  meilisearch:
+    image: getmeili/meilisearch:latest
+    container_name: hrm_meilisearch
+    ports:
+      - "7700:7700"
+    environment:
+      MEILI_ENV: development
+      MEILI_MASTER_KEY: masterKey123
+    volumes:
+      - meilisearch_data:/meili_data
+    networks:
+      - hrm_network
+
+  # MailHog (Email Testing)
+  mailhog:
+    image: mailhog/mailhog
+    container_name: hrm_mailhog
+    ports:
+      - "1025:1025"  # SMTP
+      - "8025:8025"  # Web UI
+    networks:
+      - hrm_network
+
+volumes:
+  postgres_data:
+  redis_data:
+  backend_vendor:
+  frontend_node_modules:
+  meilisearch_data:
+
+networks:
+  hrm_network:
+    driver: bridge
