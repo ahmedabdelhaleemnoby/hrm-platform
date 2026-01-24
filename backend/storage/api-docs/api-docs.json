@@ -778,6 +778,31 @@
                 ]
             }
         },
+        "/api/v1/payroll/records/{id}/pdf": {
+            "get": {
+                "tags": [
+                    "Payroll"
+                ],
+                "summary": "Download a payslip as PDF",
+                "operationId": "45def8fcbb7f7415fc700e22aa66041f",
+                "responses": {
+                    "200": {
+                        "description": "Payslip PDF"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Payslip not found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/v1/performance/reviews": {
             "get": {
                 "tags": [
