@@ -15,8 +15,8 @@ const MyProfilePage: React.FC = () => {
       if (user?.employee?.id) {
         try {
             const response = await employeeApi.getById(user.employee.id);
-            if(response.data.success) {
-                setEmployee(response.data.data);
+            if(response.success) {
+                setEmployee(response.data);
             }
         } catch (error) {
             console.error(error);

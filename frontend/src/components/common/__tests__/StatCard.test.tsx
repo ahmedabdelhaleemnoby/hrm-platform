@@ -9,7 +9,7 @@ describe('StatCard', () => {
         title="Total Employees"
         value="150"
         icon={<div>Icon</div>}
-        color="#1976d2"
+        color="primary"
       />
     );
 
@@ -23,7 +23,7 @@ describe('StatCard', () => {
         title="Test"
         value="100"
         icon={<div>Icon</div>}
-        color="#ff0000"
+        color="error"
       />
     );
 

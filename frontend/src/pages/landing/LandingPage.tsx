@@ -15,6 +15,7 @@ import {
   Button,
   Card,
   CardContent,
+  CircularProgress,
   Container,
   Grid,
   IconButton,
@@ -29,6 +30,7 @@ import {
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 import { useThemeContext } from '../../contexts/ThemeContext';
 
 const LandingPage: React.FC = () => {
@@ -42,10 +44,26 @@ const LandingPage: React.FC = () => {
   const language = themeContext?.language ?? 'en';
   const setLanguage = themeContext?.setLanguage ?? (() => {});
   const direction = themeContext?.direction ?? 'ltr';
+  
+  const { login } = useAuth();
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const [langAnchorEl, setLangAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleLangMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleDirectLogin = async () => {
+    setIsLoggingIn(true);
+    try {
+      await login({ email: 'admin@demo.com', password: 'password', tenant_id: 'demo' });
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Direct login failed:', error);
+      navigate('/login');
+    } finally {
+      setIsLoggingIn(false);
+    }
+  };
+
+  const handleLangMenuOpen = (event: any) => {
     setLangAnchorEl(event.currentTarget);
   };
 
@@ -135,7 +153,8 @@ const LandingPage: React.FC = () => {
               </Button>
               <Button 
                 variant="contained" 
-                onClick={() => navigate('/login')}
+                onClick={handleDirectLogin}
+                disabled={isLoggingIn}
                 sx={{ 
                   bgcolor: '#6366f1', 
                   '&:hover': { bgcolor: '#4f46e5' },
@@ -202,9 +221,10 @@ const LandingPage: React.FC = () => {
                   <Button 
                     variant="contained" 
                     size="large"
-                    onClick={() => navigate('/login')}
-                    endIcon={direction === 'ltr' ? <ChevronRightIcon /> : null}
-                    startIcon={direction === 'rtl' ? <ChevronRightIcon sx={{ transform: 'rotate(180deg)' }} /> : null}
+                    onClick={handleDirectLogin}
+                    disabled={isLoggingIn}
+                    endIcon={direction === 'ltr' ? (isLoggingIn ? <CircularProgress size={20} color="inherit" /> : <ChevronRightIcon />) : null}
+                    startIcon={direction === 'rtl' ? (isLoggingIn ? <CircularProgress size={20} color="inherit" /> : <ChevronRightIcon sx={{ transform: 'rotate(180deg)' }} />) : null}
                     sx={{ 
                       bgcolor: '#6366f1', 
                       height: 56, 
@@ -215,7 +235,7 @@ const LandingPage: React.FC = () => {
                       boxShadow: '0 10px 15px -3px rgba(99, 102, 241, 0.3)'
                     }}
                   >
-                    {t('landing.hero.startTrial')}
+                    {isLoggingIn ? t('common.loading') : t('landing.hero.startTrial')}
                   </Button>
                   <Button 
                     variant="outlined" 

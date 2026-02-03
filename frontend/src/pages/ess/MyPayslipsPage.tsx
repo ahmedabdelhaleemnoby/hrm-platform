@@ -14,8 +14,8 @@ const MyPayslipsPage: React.FC = () => {
         try {
             // We need to add this method to payrollApi frontend
             const response = await payrollApi.getMyPayslips(); 
-            if(response.data.success) {
-                setPayslips(response.data.data);
+            if(response.success) {
+                setPayslips(response.data);
             }
         } catch (error) {
             console.error(error);

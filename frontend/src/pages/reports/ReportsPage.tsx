@@ -279,9 +279,9 @@ const ReportsPage: React.FC = () => {
                 <ResponsiveContainer>
                   <BarChart data={recruitmentData?.applications_by_stage}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="stage" tickFormatter={(val) => t(`recruitment.${val}`, val)} />
+                    <XAxis dataKey="stage" tickFormatter={(val) => t(`recruitment.${val}`, val).toString()} />
                     <YAxis />
-                    <Tooltip labelFormatter={(val) => t(`recruitment.${val}`, val)} />
+                    <Tooltip labelFormatter={(val) => t(`recruitment.${val}`, val).toString()} />
                     <Bar dataKey="count" fill="#ff9800" name={t('reports.candidates', 'Candidates')} />
                   </BarChart>
                 </ResponsiveContainer>
