@@ -8,7 +8,8 @@ import { Link as RouterLink, useLocation } from 'react-router-dom';
 const Breadcrumbs: React.FC = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const { direction } = useThemeContext();
+  const themeContext = useThemeContext();
+  const direction = themeContext?.direction || 'ltr';
   
   const pathnames = location.pathname.split('/').filter((x) => x);
 

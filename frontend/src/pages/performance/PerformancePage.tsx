@@ -31,7 +31,8 @@ import { useTranslation } from 'react-i18next';
 
 const PerformancePage: React.FC = () => {
   const { t } = useTranslation();
-  const { language } = useThemeContext();
+  const themeContext = useThemeContext();
+  const language = themeContext?.language || 'en';
   const [selectedTab, setSelectedTab] = useState(0);
   const [okrs, setOkrs] = useState<Okr[]>([]);
   const [goals, setGoals] = useState<Goal[]>([]);

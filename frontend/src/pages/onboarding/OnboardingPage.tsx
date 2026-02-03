@@ -48,7 +48,8 @@ const categoryColors: Record<string, string> = {
 
 const OnboardingPage: React.FC = () => {
   const { t } = useTranslation();
-  const { language } = useThemeContext();
+  const themeContext = useThemeContext();
+  const language = themeContext?.language || 'en';
   const [selectedTab, setSelectedTab] = useState(0);
   const [checklists, setChecklists] = useState<OnboardingChecklist[]>([]);
   const [templates, setTemplates] = useState<OnboardingTemplate[]>([]);

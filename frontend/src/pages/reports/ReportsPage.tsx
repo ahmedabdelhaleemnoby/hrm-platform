@@ -37,7 +37,8 @@ const COLORS = ['#667eea', '#4caf50', '#ff9800', '#f44336', '#2196f3', '#9c27b0'
 
 const ReportsPage: React.FC = () => {
   const { t } = useTranslation();
-  const { language } = useThemeContext();
+  const themeContext = useThemeContext();
+  const language = themeContext?.language || 'en';
   const [employeeData, setEmployeeData] = useState<EmployeeReports | null>(null);
   const [attendanceData, setAttendanceData] = useState<AttendanceReports | null>(null);
   const [payrollData, setPayrollData] = useState<PayrollReports | null>(null);
@@ -211,7 +212,7 @@ const ReportsPage: React.FC = () => {
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>
-                    <Tooltip formatter={(value, name, props) => [value, t(`recruitment.${props.payload.employment_type}`, props.payload.employment_type)]} />
+                    <Tooltip formatter={(value: any, _name: any, props: any) => [value, t(`recruitment.${props.payload.employment_type}`, props.payload.employment_type)]} />
                   </PieChart>
                 </ResponsiveContainer>
               </Box>

@@ -31,7 +31,8 @@ import { useNavigate } from 'react-router-dom';
 const NotificationsPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { language } = useThemeContext();
+  const themeContext = useThemeContext();
+  const language = themeContext?.language || 'en';
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
   const [unreadCount, setUnreadCount] = useState(0);

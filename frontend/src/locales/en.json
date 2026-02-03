@@ -83,7 +83,14 @@
     "filterToday": "Today",
     "filterWeek": "This Week",
     "filterMonth": "This Month",
-    "filterAll": "All Time"
+    "filterAll": "All Time",
+    "analyticsPreview": "Real-time Analytics",
+    "smartReports": "Smart Reports",
+    "reportsDesc": "Generate comprehensive PDF and Excel reports with a single click for payroll and attendance.",
+    "dragDrop": "Customizable Layout",
+    "dragDropDesc": "Drag and drop dashboard widgets to prioritize the information that matters most to you.",
+    "mobileReady": "Mobile Ready",
+    "mobileReadyDesc": "Access your HRM platform on the go with a fully responsive mobile interface."
   },
   "employees": {
     "title": "Employees",
@@ -437,7 +444,8 @@
       "subtitle": "Elevate Your Business.",
       "description": "The all-in-one HRM platform designed for modern teams. Streamline operations, automate payroll, and grow your talent with HRMFLOW.",
       "startTrial": "Start Free Trial",
-      "watchDemo": "Watch Demo"
+      "watchDemo": "Watch Demo",
+      "demoHint": "Try with Demo Account: admin@demo.com / password"
     },
     "stats": {
       "activeUsers": "Users Active",
@@ -465,6 +473,11 @@
         "title": "Performance Tracking",
         "description": "Align teams with OKRs and performance reviews to drive growth."
       }
+    },
+    "preview": {
+      "overline": "Inside the Platform",
+      "title": "Powerful Dashboard for Real-time Insights",
+      "description": "Monitor your workforce, track attendance, and manage leave requests from a single intuitive interface designed for efficiency."
     },
     "cta": {
       "title": "Ready to transform your HR?",

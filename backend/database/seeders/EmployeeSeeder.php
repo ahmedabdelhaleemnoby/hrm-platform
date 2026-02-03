@@ -15,6 +15,27 @@ class EmployeeSeeder extends Seeder
     $departments = ['Engineering', 'Sales', 'Marketing', 'HR', 'Finance'];
     $positions = ['Manager', 'Senior Developer', 'Developer', 'Specialist', 'Analyst'];
 
+    // Create demo admin employee
+    DB::table('employees')->updateOrInsert(
+      ['employee_code' => 'EMP00000'],
+      [
+        'first_name' => 'Demo',
+        'last_name' => 'Admin',
+        'email' => 'admin@demo.com',
+        'phone' => '+1-555-0000',
+        'date_of_birth' => '1985-01-01',
+        'gender' => 'male',
+        'department' => 'HR',
+        'position' => 'System Administrator',
+        'employment_status' => 'active',
+        'employment_type' => 'full_time',
+        'hire_date' => '2015-01-01',
+        'salary' => 150000,
+        'address' => 'Demo Office, Silicon Valley, CA',
+        'updated_at' => now(),
+      ]
+    );
+
     // Create admin employee
     DB::table('employees')->updateOrInsert(
       ['employee_code' => 'EMP00001'],

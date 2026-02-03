@@ -48,16 +48,16 @@ jobs:
           extensions: pdo, pgsql, mbstring, zip, bcmath
           coverage: xdebug
       
+      - name: Install Dependencies
+        run: |
+          cd backend
+          composer install --prefer-dist --no-progress
+      
       - name: Copy .env
         run: |
           cd backend
           cp .env.example .env
           php artisan key:generate
-      
-      - name: Install Dependencies
-        run: |
-          cd backend
-          composer install --prefer-dist --no-progress
       
       - name: Run Tests
         run: |

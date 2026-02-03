@@ -51,7 +51,8 @@ const COLORS = ['#667eea', '#4caf50', '#ff9800', '#f44336', '#2196f3', '#9c27b0'
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
-  const { language } = useThemeContext();
+  const themeContext = useThemeContext();
+  const language = themeContext?.language || 'en';
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [isEditMode, setIsEditMode] = useState(false);

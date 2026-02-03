@@ -59,7 +59,12 @@ function TabPanel(props: TabPanelProps) {
 
 const SettingsPage: React.FC = () => {
   const { t } = useTranslation();
-  const { themeMode, setThemeMode, language, setLanguage, resolvedMode } = useThemeContext();
+  const themeContext = useThemeContext();
+  const themeMode = themeContext?.themeMode || 'auto';
+  const setThemeMode = themeContext?.setThemeMode || (() => {});
+  const language = themeContext?.language || 'en';
+  const setLanguage = themeContext?.setLanguage || (() => {});
+  const resolvedMode = themeContext?.resolvedMode || 'light';
   const { user, refreshUser } = useAuth();
   const [tabValue, setTabValue] = useState(0);
 

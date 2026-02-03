@@ -34,7 +34,8 @@ import { useTranslation } from 'react-i18next';
 
 const PayrollPage: React.FC = () => {
   const { t } = useTranslation();
-  const { language } = useThemeContext();
+  const themeContext = useThemeContext();
+  const language = themeContext?.language || 'en';
   const [periods, setPeriods] = useState<PayrollPeriod[]>([]);
   const [records, setRecords] = useState<PayrollRecord[]>([]);
   const [selectedPeriod, setSelectedPeriod] = useState<number | ''>('');

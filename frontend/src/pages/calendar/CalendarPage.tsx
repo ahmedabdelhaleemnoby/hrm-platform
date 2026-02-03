@@ -25,7 +25,9 @@ import { useTranslation } from 'react-i18next';
 const CalendarPage: React.FC = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { resolvedMode, language } = useThemeContext();
+  const themeContext = useThemeContext();
+  const resolvedMode = themeContext?.resolvedMode || 'light';
+  const language = themeContext?.language || 'en';
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);

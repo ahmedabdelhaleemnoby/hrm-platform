@@ -234,6 +234,9 @@ const LandingPage: React.FC = () => {
                     {t('landing.hero.watchDemo')}
                   </Button>
                 </Stack>
+                <Typography variant="caption" sx={{ display: 'block', mt: 2, color: subTextColor, fontStyle: 'italic' }}>
+                   {t('landing.hero.demoHint') || 'Try with Demo Account: admin@demo.com / password'}
+                </Typography>
               </Box>
             </Grid>
             <Grid item xs={12} md={6} sx={{ position: 'relative', zIndex: 1 }}>
@@ -342,6 +345,93 @@ const LandingPage: React.FC = () => {
                 </Card>
               </Grid>
             ))}
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* Dashboard Preview Section */}
+      <Box sx={{ py: 15, bgcolor: resolvedMode === 'dark' ? '#1e293b' : '#ffffff', direction }}>
+        <Container maxWidth="lg">
+          <Box sx={{ textAlign: 'center', mb: 10 }}>
+            <Typography variant="overline" sx={{ color: '#6366f1', fontWeight: 700, letterSpacing: 2 }}>
+              Inside the Platform
+            </Typography>
+            <Typography variant="h2" sx={{ fontWeight: 800, mt: 2, mb: 3 }}>
+              Powerful Dashboard for Real-time Insights
+            </Typography>
+            <Typography variant="h6" sx={{ color: subTextColor, maxWidth: 800, mx: 'auto', fontWeight: 400 }}>
+              Monitor your workforce, track attendance, and manage leave requests from a single intuitive interface designed for efficiency.
+            </Typography>
+          </Box>
+
+          <Grid container spacing={4} alignItems="center">
+            <Grid item xs={12} lg={7}>
+              <Box 
+                sx={{ 
+                  bgcolor: cardBg, 
+                  borderRadius: 4, 
+                  p: 4, 
+                  boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)',
+                  border: `1px solid ${cardBorder}`,
+                  position: 'relative'
+                }}
+              >
+                {/* Mock Dashboard Stats */}
+                <Grid container spacing={3} sx={{ mb: 4 }}>
+                  {[
+                    { label: t('dashboard.totalEmployees'), value: '124', color: '#6366f1', icon: <PeopleIcon /> },
+                    { label: t('dashboard.presentToday'), value: '98', color: '#10b981', icon: <AttendanceIcon /> },
+                    { label: t('dashboard.onLeave'), value: '12', color: '#f59e0b', icon: <PayrollIcon /> },
+                    { label: t('dashboard.departments'), value: '8', color: '#6366f1', icon: <PerformanceIcon /> },
+                  ].map((stat, idx) => (
+                    <Grid item xs={6} sm={3} key={idx}>
+                      <Box sx={{ p: 2, borderRadius: 2, bgcolor: alpha(stat.color, 0.05), border: `1px solid ${alpha(stat.color, 0.1)}` }}>
+                        <Box sx={{ color: stat.color, mb: 1 }}>{stat.icon}</Box>
+                        <Typography variant="h5" fontWeight="bold">{stat.value}</Typography>
+                        <Typography variant="caption" sx={{ color: subTextColor }}>{stat.label}</Typography>
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
+
+                {/* Mock Chart Area */}
+                <Box sx={{ height: 200, bgcolor: alpha(subTextColor, 0.05), borderRadius: 2, position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'flex-end', gap: 1, p: 2 }}>
+                   {[60, 40, 70, 90, 50, 80, 60, 45, 75, 55].map((h, i) => (
+                     <Box key={i} sx={{ flex: 1, bgcolor: '#6366f1', height: `${h}%`, borderRadius: '4px 4px 0 0', opacity: 0.6 + (i * 0.04) }} />
+                   ))}
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={12} lg={5}>
+              <Stack spacing={4}>
+                {[
+                  { title: 'Smart Reports', desc: 'Generate comprehensive PDF and Excel reports with a single click for payroll and attendance.' },
+                  { title: 'Customizable Layout', desc: 'Drag and drop dashboard widgets to prioritize the information that matters most to you.' },
+                  { title: 'Mobile Ready', desc: 'Access your HRM platform on the go with a fully responsive mobile interface.' }
+                ].map((item, i) => (
+                  <Box key={i} sx={{ display: 'flex', gap: 3 }}>
+                    <Box sx={{ 
+                      width: 48, 
+                      height: 48, 
+                      borderRadius: '50%', 
+                      p: 1.5,
+                      bgcolor: alpha('#6366f1', 0.1), 
+                      color: '#6366f1',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0
+                    }}>
+                      <AttendanceIcon fontSize="small" />
+                    </Box>
+                    <Box>
+                      <Typography variant="h6" fontWeight="bold" sx={{ mb: 1 }}>{item.title}</Typography>
+                      <Typography variant="body1" sx={{ color: subTextColor }}>{item.desc}</Typography>
+                    </Box>
+                  </Box>
+                ))}
+              </Stack>
+            </Grid>
           </Grid>
         </Container>
       </Box>

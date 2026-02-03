@@ -1,32 +1,32 @@
 import { useThemeContext } from '@/contexts/ThemeContext';
 import {
-  AdminPanelSettings as AdminPanelSettingsIcon,
-  Assignment as AssignmentIcon,
-  AttachMoney as AttachMoneyIcon,
-  ChevronLeft as ChevronLeftIcon,
-  ChevronRight as ChevronRightIcon,
-  Dashboard as DashboardIcon,
-  EventNote as EventNoteIcon,
-  History as HistoryIcon,
-  HowToReg as OnboardingIcon,
-  People as PeopleIcon,
-  Work as RecruitmentIcon,
-  Schedule as ScheduleIcon,
-  Settings as SettingsIcon,
-  TrendingUp as TrendingUpIcon
+    AdminPanelSettings as AdminPanelSettingsIcon,
+    Assignment as AssignmentIcon,
+    AttachMoney as AttachMoneyIcon,
+    ChevronLeft as ChevronLeftIcon,
+    ChevronRight as ChevronRightIcon,
+    Dashboard as DashboardIcon,
+    EventNote as EventNoteIcon,
+    History as HistoryIcon,
+    HowToReg as OnboardingIcon,
+    People as PeopleIcon,
+    Work as RecruitmentIcon,
+    Schedule as ScheduleIcon,
+    Settings as SettingsIcon,
+    TrendingUp as TrendingUpIcon
 } from '@mui/icons-material';
 import {
-  Box,
-  Divider,
-  Drawer,
-  IconButton,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-  useMediaQuery,
-  useTheme,
+    Box,
+    Divider,
+    Drawer,
+    IconButton,
+    List,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    Typography,
+    useMediaQuery,
+    useTheme,
 } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -77,7 +77,9 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { t } = useTranslation();
-  const { resolvedMode, direction } = useThemeContext();
+  const themeContext = useThemeContext();
+  const resolvedMode = themeContext?.resolvedMode || 'light';
+  const direction = themeContext?.direction || 'ltr';
   const { user } = useAuth(); // Get current user
 
   const handleNavigate = (path: string) => {

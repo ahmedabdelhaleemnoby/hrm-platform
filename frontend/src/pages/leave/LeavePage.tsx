@@ -29,7 +29,8 @@ import { useTranslation } from 'react-i18next';
 
 const LeavePage: React.FC = () => {
   const { t } = useTranslation();
-  const { language } = useThemeContext();
+  const themeContext = useThemeContext();
+  const language = themeContext?.language || 'en';
   const [requests, setRequests] = useState<LeaveRequest[]>([]);
   const [types, setTypes] = useState<LeaveType[]>([]);
   const [loading, setLoading] = useState(true);
@@ -178,7 +179,7 @@ const LeavePage: React.FC = () => {
                       <Box sx={{ width: 12, height: 12, borderRadius: '50%', bgcolor: type.color }} />
                       <Typography variant="body2">{type.name}</Typography>
                     </Box>
-                    <Typography variant="caption" color="text.secondary">{t('leave.maxDaysPerYear', { count: type.max_days_per_year || '∞' })}</Typography>
+                    <Typography variant="caption" color="text.secondary">{t('leave.maxDaysPerYear', { count: type.max_days_per_year as any })}</Typography>
                   </Box>
                 ))}
               </Box>

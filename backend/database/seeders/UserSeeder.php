@@ -11,6 +11,20 @@ class UserSeeder extends Seeder
 {
   public function run(): void
   {
+    // 0. Demo Admin User
+    $demoAdminEmployee = Employee::where('email', 'admin@demo.com')->first();
+    if ($demoAdminEmployee) {
+      $demoAdminUser = User::firstOrCreate(
+        ['email' => 'admin@demo.com'],
+        [
+          'name' => 'Demo Admin',
+          'password' => Hash::make('password'),
+          'employee_id' => $demoAdminEmployee->id,
+        ]
+      );
+      $demoAdminUser->assignRole('admin');
+    }
+
     // 1. Admin User (already created if logged on via AuthController demo, but let's Ensure existence)
     // Find employee with admin email
     $adminEmployee = Employee::where('email', 'admin@democorp.com')->first();

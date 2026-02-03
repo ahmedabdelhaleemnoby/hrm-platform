@@ -13,7 +13,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [sidebarOpen, setSidebarOpen] = useState(!isMobile);
-  const { resolvedMode, direction } = useThemeContext();
+  const themeContext = useThemeContext();
+  const resolvedMode = themeContext?.resolvedMode || 'light';
+  const direction = themeContext?.direction || 'ltr';
 
   const handleMenuClick = () => {
     setSidebarOpen(!sidebarOpen);

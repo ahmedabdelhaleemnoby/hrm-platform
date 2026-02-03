@@ -31,7 +31,8 @@ import { useTranslation } from 'react-i18next';
 
 const AttendancePage: React.FC = () => {
   const { t } = useTranslation();
-  const { language } = useThemeContext();
+  const themeContext = useThemeContext();
+  const language = themeContext?.language || 'en';
   useAuth(); // Removed empty pattern destructuring
   const [currentTime, setCurrentTime] = useState(new Date());
   const [attendances, setAttendances] = useState<Attendance[]>([]);

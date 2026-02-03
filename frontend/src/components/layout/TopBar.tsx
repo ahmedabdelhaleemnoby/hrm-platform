@@ -4,31 +4,31 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useThemeContext } from '@/contexts/ThemeContext';
 import echo from '@/utils/echo';
 import {
-  Brightness4 as AutoModeIcon,
-  DarkMode as DarkModeIcon,
-  LightMode as LightModeIcon,
-  Menu as MenuIcon,
-  Notifications as NotificationsIcon,
-  Search as SearchIcon,
-  Translate as TranslateIcon,
+    Brightness4 as AutoModeIcon,
+    DarkMode as DarkModeIcon,
+    LightMode as LightModeIcon,
+    Menu as MenuIcon,
+    Notifications as NotificationsIcon,
+    Search as SearchIcon,
+    Translate as TranslateIcon,
 } from '@mui/icons-material';
 import {
-  AppBar,
-  Avatar,
-  Badge,
-  Box,
-  CircularProgress,
-  Divider,
-  IconButton,
-  InputBase,
-  ListItemIcon,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Tooltip,
-  Typography,
-  useMediaQuery,
-  useTheme,
+    AppBar,
+    Avatar,
+    Badge,
+    Box,
+    CircularProgress,
+    Divider,
+    IconButton,
+    InputBase,
+    ListItemIcon,
+    Menu,
+    MenuItem,
+    Toolbar,
+    Tooltip,
+    Typography,
+    useMediaQuery,
+    useTheme,
 } from '@mui/material';
 import { formatDistanceToNow } from 'date-fns';
 import { ar, enUS } from 'date-fns/locale';
@@ -42,7 +42,13 @@ interface TopBarProps {
 
 const TopBar: React.FC<TopBarProps> = ({ onMenuClick }) => {
   const { user, logout } = useAuth();
-  const { themeMode, setThemeMode, resolvedMode, language, setLanguage, direction } = useThemeContext();
+  const themeContext = useThemeContext();
+  const themeMode = themeContext?.themeMode || 'auto';
+  const setThemeMode = themeContext?.setThemeMode || (() => {});
+  const resolvedMode = themeContext?.resolvedMode || 'light';
+  const language = themeContext?.language || 'en';
+  const setLanguage = themeContext?.setLanguage || (() => {});
+  const direction = themeContext?.direction || 'ltr';
   const { t } = useTranslation();
   const navigate = useNavigate();
   const theme = useTheme();
