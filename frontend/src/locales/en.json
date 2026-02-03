@@ -419,12 +419,73 @@
     "title": "HR Calendar",
     "subtitle": "View leaves, birthdays, and interviews",
     "legend": {
-        "leaves": "Leaves",
-        "birthdays": "Birthdays",
-        "interviews": "Interviews"
+      "leaves": "Leaves",
+      "birthdays": "Birthdays",
+      "interviews": "Interviews"
     },
     "date": "Date",
     "leaveType": "Leave Type",
     "location": "Location"
+  },
+  "landing": {
+    "nav": {
+      "login": "Login",
+      "getStarted": "Get Started"
+    },
+    "hero": {
+      "title": "Manage Your People,",
+      "subtitle": "Elevate Your Business.",
+      "description": "The all-in-one HRM platform designed for modern teams. Streamline operations, automate payroll, and grow your talent with HRMFLOW.",
+      "startTrial": "Start Free Trial",
+      "watchDemo": "Watch Demo"
+    },
+    "stats": {
+      "activeUsers": "Users Active",
+      "countries": "Countries Reach",
+      "timeSaved": "Time Saved",
+      "csat": "CSAT Score"
+    },
+    "features": {
+      "overline": "FEATURES",
+      "title": "Everything you need to",
+      "subtitle": "scale your team.",
+      "employeeManagement": {
+        "title": "Employee Management",
+        "description": "Streamline your workforce data with intuitive profiles and document tracking."
+      },
+      "smartAttendance": {
+        "title": "Smart Attendance",
+        "description": "Track time and attendance with GPS-tagged clocking and real-time reporting."
+      },
+      "automatedPayroll": {
+        "title": "Automated Payroll",
+        "description": "Calculate salaries, taxes, and generate official payslips with a single click."
+      },
+      "performanceTracking": {
+        "title": "Performance Tracking",
+        "description": "Align teams with OKRs and performance reviews to drive growth."
+      }
+    },
+    "cta": {
+      "title": "Ready to transform your HR?",
+      "description": "Join over 1,000+ companies that use HRMFLOW to power their human resources operations.",
+      "button": "Get Started for Free"
+    },
+    "footer": {
+      "description": "A premium HRM solution building the future of work, one employee at a time.",
+      "product": "Product",
+      "features": "Features",
+      "pricing": "Pricing",
+      "integrations": "Integrations",
+      "company": "Company",
+      "aboutUs": "About Us",
+      "careers": "Careers",
+      "blog": "Blog",
+      "support": "Support",
+      "newsletterDescription": "Subscribe to our newsletter for HR tips and product updates.",
+      "emailPlaceholder": "name@email.com",
+      "join": "Join",
+      "rights": "All rights reserved."
+    }
   }
 }

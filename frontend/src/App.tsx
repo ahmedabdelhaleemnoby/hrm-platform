@@ -21,6 +21,7 @@ import NewEmployeePage from './pages/employees/NewEmployeePage';
 import MyLeavesPage from './pages/ess/MyLeavesPage';
 import MyPayslipsPage from './pages/ess/MyPayslipsPage';
 import MyProfilePage from './pages/ess/MyProfilePage';
+import LandingPage from './pages/landing/LandingPage';
 import LeavePage from './pages/leave/LeavePage';
 import LeaveApprovalsPage from './pages/leaves/LeaveApprovalsPage';
 import NotificationsPage from './pages/notifications/NotificationsPage';
@@ -237,8 +238,9 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/" element={<Navigate to="/dashboard" />} />
-            <Route path="*" element={<Navigate to="/dashboard" />} />
+            <Route path="/leave-approvals" element={<ProtectedRoute><LeaveApprovalsPage /></ProtectedRoute>} />
+            <Route path="/" element={<LandingPage />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

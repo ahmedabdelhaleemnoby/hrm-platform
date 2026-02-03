@@ -1,4 +1,5 @@
 import { useAuth } from '@/contexts/AuthContext';
+import { ChevronRight as ChevronRightIcon } from '@mui/icons-material';
 import {
     Alert,
     Box,
@@ -59,7 +60,20 @@ const LoginPage: React.FC = () => {
     >
       <Container maxWidth="sm">
         <Paper elevation={24} sx={{ p: 4, borderRadius: 2 }}>
-          <Box sx={{ textAlign: 'center', mb: 4 }}>
+          <Box sx={{ textAlign: 'center', mb: 4, position: 'relative' }}>
+            <Button
+              startIcon={<ChevronRightIcon sx={{ transform: 'rotate(180deg)' }} />}
+              onClick={() => navigate('/')}
+              sx={{ 
+                position: 'absolute', 
+                left: -10, 
+                top: -10, 
+                textTransform: 'none',
+                color: 'text.secondary'
+              }}
+            >
+              Home
+            </Button>
             <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
               HRM Platform
             </Typography>
