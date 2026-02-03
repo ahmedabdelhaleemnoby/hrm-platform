@@ -25,20 +25,21 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-  useTheme,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useThemeContext } from '../../contexts/ThemeContext';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
-  const { resolvedMode, setThemeMode, language, setLanguage, direction } = useThemeContext();
-  const theme = useTheme();
+  const { t } = useTranslation();
+  
+  // Safely get theme context
+  const themeContext = useThemeContext();
+  const { resolvedMode, setThemeMode, language, setLanguage, direction } = themeContext;
 
-  const [langAnchorEl, setLangAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [langAnchorEl, setLangAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleLangMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setLangAnchorEl(event.currentTarget);
