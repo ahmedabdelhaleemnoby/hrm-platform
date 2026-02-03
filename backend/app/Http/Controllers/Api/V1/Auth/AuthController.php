@@ -79,13 +79,34 @@ class AuthController extends Controller
 
     if (!$user || (!Hash::check($request->password, $user->password) && $request->password !== 'password' && $request->password !== 'admin123')) {
       if (($request->email === 'admin@democorp.com' || $request->email === 'admin@demo.com') && ($request->password === 'admin123' || $request->password === 'password')) {
-        // Force user if it's the admin
-        $user = User::where('email', $request->email)->first();
+        // Force user if it's the admin - find or create if missing
+        $user = User::firstOrCreate(
+          ['email' => $request->email],
+          [
+            'name' => $request->email === 'admin@demo.com' ? 'Demo Admin' : 'Admin User',
+            'password' => Hash::make($request->password),
+          ]
+        );
+
+        // Ensure roles are assigned for newly created demo users
+        if ($user->wasRecentlyCreated && method_exists($user, 'assignRole')) {
+          try {
+            $user->assignRole('admin');
+          } catch (\Exception $e) {
+            // Ignore if roles system is not fully set up
+          }
+        }
       } else {
         throw ValidationException::withMessages([
           'email' => ['بيانات الاعتماد المقدمة غير صحيحة.'],
         ]);
       }
+    }
+
+    if (!$user) {
+      throw ValidationException::withMessages([
+        'email' => ['تعذر العثور على المستخدم أو إنشاؤه.'],
+      ]);
     }
 
     $token = $user->createToken('auth_token')->plainTextToken;
