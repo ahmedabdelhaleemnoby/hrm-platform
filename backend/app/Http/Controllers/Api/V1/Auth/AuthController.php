@@ -7,6 +7,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Validation\ValidationException;
 
 use OpenApi\Attributes as OA;
@@ -273,6 +277,116 @@ class AuthController extends Controller
     return response()->json([
       'status' => 'success',
       'data' => $user->notification_settings
+    ]);
+  }
+
+  #[OA\Post(
+    path: "/api/v1/auth/forgot-password",
+    summary: "Send password reset link",
+    tags: ["Authentication"],
+    requestBody: new OA\RequestBody(
+      required: true,
+      content: new OA\JsonContent(
+        required: ["email"],
+        properties: [
+          new OA\Property(property: "email", type: "string", format: "email", example: "admin@democorp.com")
+        ]
+      )
+    ),
+    responses: [
+      new OA\Response(response: 200, description: "Reset link sent"),
+      new OA\Response(response: 404, description: "User not found")
+    ]
+  )]
+  public function forgotPassword(Request $request)
+  {
+    $request->validate(['email' => 'required|email']);
+
+    $user = User::where('email', $request->email)->first();
+
+    if (!$user) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'لم نتمكن من العثور على مستخدم بهذا العنوان البريدي.'
+      ], 404);
+    }
+
+    $token = Str::random(64);
+
+    DB::table('password_reset_tokens')->updateOrInsert(
+      ['email' => $request->email],
+      [
+        'email' => $request->email,
+        'token' => Hash::make($token),
+        'created_at' => Carbon::now()
+      ]
+    );
+
+    $user->notify(new ResetPasswordNotification($token));
+
+    return response()->json([
+      'status' => 'success',
+      'message' => 'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.'
+    ]);
+  }
+
+  #[OA\Post(
+    path: "/api/v1/auth/reset-password",
+    summary: "Reset password using token",
+    tags: ["Authentication"],
+    requestBody: new OA\RequestBody(
+      required: true,
+      content: new OA\JsonContent(
+        required: ["token", "email", "password", "password_confirmation"],
+        properties: [
+          new OA\Property(property: "token", type: "string"),
+          new OA\Property(property: "email", type: "string", format: "email"),
+          new OA\Property(property: "password", type: "string", format: "password"),
+          new OA\Property(property: "password_confirmation", type: "string", format: "password")
+        ]
+      )
+    ),
+    responses: [
+      new OA\Response(response: 200, description: "Password reset successful"),
+      new OA\Response(response: 400, description: "Invalid token or expired")
+    ]
+  )]
+  public function resetPassword(Request $request)
+  {
+    $request->validate([
+      'token' => 'required',
+      'email' => 'required|email',
+      'password' => 'required|min:8|confirmed',
+    ]);
+
+    $reset = DB::table('password_reset_tokens')
+      ->where('email', $request->email)
+      ->first();
+
+    if (!$reset || !Hash::check($request->token, $reset->token)) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'الرمز أو البريد الإلكتروني غير صالح.'
+      ], 400);
+    }
+
+    if (Carbon::parse($reset->created_at)->addMinutes(60)->isPast()) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'انتهت صلاحية الرمز.'
+      ], 400);
+    }
+
+    $user = User::where('email', $request->email)->first();
+    $user->update([
+      'password' => Hash::make($request->password)
+    ]);
+
+    DB::table('password_reset_tokens')->where(['email' => $request->email])->delete();
+
+    return response()->json([
+      'status' => 'success',
+      'message' => 'تم إعادة تعيين كلمة المرور بنجاح.'
     ]);
   }
 }

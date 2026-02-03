@@ -10,7 +10,9 @@ import AuditLogPage from './pages/admin/AuditLogPage';
 import RoleManagementPage from './pages/admin/RoleManagementPage';
 import UserRoleManagementPage from './pages/admin/UserRoleManagementPage';
 import AttendancePage from './pages/attendance/AttendancePage';
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import LoginPage from './pages/auth/LoginPage';
+import ResetPasswordPage from './pages/auth/ResetPasswordPage';
 import CalendarPage from './pages/calendar/CalendarPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
 import EmployeeListPage from './pages/employees/EmployeeListPage';
@@ -50,6 +52,8 @@ function App() {
           <Routes>
             {/* Public Routes */}
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
 
             {/* Protected Routes */}
             <Route

@@ -100,13 +100,24 @@ const LoginPage: React.FC = () => {
               autoComplete="current-password"
             />
 
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+              <Button
+                variant="text"
+                size="small"
+                onClick={() => navigate('/forgot-password')}
+                sx={{ textTransform: 'none' }}
+              >
+                Forgot Password?
+              </Button>
+            </Box>
+
             <Button
               fullWidth
               type="submit"
               variant="contained"
               size="large"
               disabled={loading}
-              sx={{ mt: 3, mb: 2, py: 1.5 }}
+              sx={{ mt: 1, mb: 2, py: 1.5 }}
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </Button>
