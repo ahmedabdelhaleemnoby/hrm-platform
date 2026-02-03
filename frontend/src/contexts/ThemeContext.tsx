@@ -15,11 +15,9 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const useThemeContext = () => {
+export const useThemeContext = (): ThemeContextType | undefined => {
   const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useThemeContext must be used within ThemeContextProvider');
-  }
+  // Return undefined instead of throwing to allow graceful handling during HMR
   return context;
 };
 

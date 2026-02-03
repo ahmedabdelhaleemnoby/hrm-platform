@@ -35,9 +35,13 @@ const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   
-  // Safely get theme context
+  // Safely get theme context with fallback values
   const themeContext = useThemeContext();
-  const { resolvedMode, setThemeMode, language, setLanguage, direction } = themeContext;
+  const resolvedMode = themeContext?.resolvedMode ?? 'light';
+  const setThemeMode = themeContext?.setThemeMode ?? (() => {});
+  const language = themeContext?.language ?? 'en';
+  const setLanguage = themeContext?.setLanguage ?? (() => {});
+  const direction = themeContext?.direction ?? 'ltr';
 
   const [langAnchorEl, setLangAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -86,10 +90,10 @@ const LandingPage: React.FC = () => {
   ];
 
   const bgColor = resolvedMode === 'dark' ? '#0f172a' : '#f8fafc';
-  const textColor = resolvedMode === 'dark' ? 'white' : '#0f172a';
+  const textColor = resolvedMode === 'dark' ? '#ffffff' : '#0f172a';
   const subTextColor = resolvedMode === 'dark' ? '#94a3b8' : '#64748b';
   const navBg = resolvedMode === 'dark' ? alpha('#0f172a', 0.8) : alpha('#f8fafc', 0.8);
-  const cardBg = resolvedMode === 'dark' ? '#1e293b' : 'white';
+  const cardBg = resolvedMode === 'dark' ? '#1e293b' : '#ffffff';
   const cardBorder = resolvedMode === 'dark' ? '#334155' : '#e2e8f0';
 
   return (
@@ -98,19 +102,19 @@ const LandingPage: React.FC = () => {
       <AppBar position="sticky" elevation={0} sx={{ bgcolor: navBg, backdropFilter: 'blur(10px)', borderBottom: `1px solid ${cardBorder}` }}>
         <Container maxWidth="lg">
           <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
-            <Typography variant="h5" component="div" sx={{ fontWeight: 800, letterSpacing: 1, color: resolvedMode === 'dark' ? 'white' : '#0f172a' }}>
+            <Typography variant="h5" component="div" sx={{ fontWeight: 800, letterSpacing: 1, color: resolvedMode === 'dark' ? '#ffffff' : '#0f172a' }}>
               HRM<Box component="span" sx={{ color: '#6366f1' }}>FLOW</Box>
             </Typography>
             
             <Stack direction="row" spacing={1} alignItems="center">
               <Tooltip title={resolvedMode === 'dark' ? t('settings.lightMode') : t('settings.darkMode')}>
-                <IconButton onClick={toggleTheme} color="inherit" sx={{ color: resolvedMode === 'dark' ? 'white' : '#0f172a' }}>
+                <IconButton onClick={toggleTheme} color="inherit" sx={{ color: resolvedMode === 'dark' ? '#ffffff' : '#0f172a' }}>
                   {resolvedMode === 'dark' ? <LightIcon /> : <DarkIcon />}
                 </IconButton>
               </Tooltip>
 
               <Tooltip title={t('settings.language')}>
-                <IconButton onClick={handleLangMenuOpen} color="inherit" sx={{ color: resolvedMode === 'dark' ? 'white' : '#0f172a' }}>
+                <IconButton onClick={handleLangMenuOpen} color="inherit" sx={{ color: resolvedMode === 'dark' ? '#ffffff' : '#0f172a' }}>
                   <LanguageIcon />
                 </IconButton>
               </Tooltip>
@@ -126,7 +130,7 @@ const LandingPage: React.FC = () => {
 
               <Box sx={{ borderLeft: `1px solid ${cardBorder}`, height: 24, mx: 1 }} />
 
-              <Button color="inherit" onClick={() => navigate('/login')} sx={{ color: resolvedMode === 'dark' ? 'white' : '#0f172a' }}>
+              <Button color="inherit" onClick={() => navigate('/login')} sx={{ color: resolvedMode === 'dark' ? '#ffffff' : '#0f172a' }}>
                 {t('landing.nav.login')}
               </Button>
               <Button 
@@ -185,7 +189,7 @@ const LandingPage: React.FC = () => {
                     fontWeight: 900, 
                     lineHeight: 1.1,
                     mb: 3,
-                    color: resolvedMode === 'dark' ? 'white' : '#0f172a',
+                    color: resolvedMode === 'dark' ? '#ffffff' : '#0f172a',
                   }}
                 >
                   {t('landing.hero.title')} <br />
@@ -217,7 +221,7 @@ const LandingPage: React.FC = () => {
                     variant="outlined" 
                     size="large"
                     sx={{ 
-                      color: resolvedMode === 'dark' ? 'white' : '#0f172a', 
+                      color: resolvedMode === 'dark' ? '#ffffff' : '#0f172a', 
                       borderColor: cardBorder, 
                       height: 56, 
                       px: 4,
@@ -367,7 +371,7 @@ const LandingPage: React.FC = () => {
               size="large"
               onClick={() => navigate('/login')}
               sx={{ 
-                bgcolor: 'white', 
+                bgcolor: '#ffffff', 
                 color: '#6366f1',
                 height: 56, 
                 px: 5, 
@@ -441,7 +445,7 @@ const LandingPage: React.FC = () => {
                   size="small" 
                   placeholder={t('landing.footer.emailPlaceholder')}
                   sx={{ 
-                    bgcolor: resolvedMode === 'dark' ? '#1e293b' : 'white', 
+                    bgcolor: resolvedMode === 'dark' ? '#1e293b' : '#ffffff', 
                     borderRadius: 1,
                     '& .MuiOutlinedInput-root': { color: textColor, '& fieldset': { borderColor: cardBorder } }
                   }} 
